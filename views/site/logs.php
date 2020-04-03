@@ -12,13 +12,7 @@ use dosamigos\chartjs\ChartJs;
 /* @var array $countBrowsers */
 
 $this->title = 'Логи';
-$arch = [
-    null => 'Не определено',
-    'x64' => 'x64',
-    'x86' => 'x86',
-];
 ?>
-<?php Pjax::begin(['timeout' => 5000]); ?>
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
