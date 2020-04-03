@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\LogsSearch;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -61,7 +62,26 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $countRequest = [];
+        $countBrowsers = [];
+        $searchModel = new LogsSearch();
+        $searchModel->attributes = Yii::$app->request->get('LogsSearch');
+        $dataProvider = $searchModel->search();
+
+        foreach ($dataProvider->models as $key => $val){
+            $countRequest[$val['date']] = $val['count'];
+        }
+
+        foreach ($dataProvider->models as $key => $val){
+            $countBrowsers[$val['date']] = round(($val['percent']/$val['count'])*100, 2) ;
+        }
+
+        return $this->render('logs', [
+            'dataProvider' => $dataProvider,
+            'searchModel' => $searchModel,
+            'countRequest' => $countRequest,
+            'countBrowsers' => $countBrowsers
+        ]);
     }
 
     /**
