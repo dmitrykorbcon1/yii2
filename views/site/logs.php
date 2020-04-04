@@ -10,6 +10,7 @@ use dosamigos\chartjs\ChartJs;
 /* @var $searchModel \app\models\logsSearch */
 /* @var array $countRequest */
 /* @var array $countBrowsers */
+/* @var array $issetOs */
 
 $this->title = 'Логи';
 ?>
@@ -22,6 +23,7 @@ $this->title = 'Логи';
                 </div>
                 <?= $this->render('_filter', [
                     'searchModel' => $searchModel,
+                    'issetOs' => $issetOs
                 ]); ?>
                 <div class="row">
                     <div class="col-md-6">

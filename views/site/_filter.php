@@ -6,14 +6,12 @@ use yii\widgets\ActiveForm;
 /* @var $this \yii\web\View */
 /* @var $dataProvider \yii\data\ArrayDataProvider */
 /* @var $searchModel \app\models\logsSearch */
+/* @var array $issetOs */
 
-$os = [
+$arch = [
     null => 'Все',
-    'Other' => 'Прочие',
-    'Android' => 'Android',
-    'Windows' => 'Windows',
-    'iOS' => 'iOS',
-    'Linux' => 'Linux'
+    'x86' => 'x86',
+    'x64' => 'x64'
 ];
 $this->registerJs("
 $('body, html').on('change', 'form#filter-search input', function() {
@@ -58,15 +56,11 @@ $('body, html').on('change', 'form#filter-search select', function() {
             </div>
             <div class="col-md-3">
                 <?= $form->field($searchModel, 'arch')
-                    ->dropDownList([
-                        null => 'Все',
-                        'x86' => 'x86',
-                        'x64' => 'x64'
-                    ]); ?>
+                    ->dropDownList($arch); ?>
             </div>
             <div class="col-md-3">
                 <?= $form->field($searchModel, 'os')
-                    ->dropDownList($os); ?>
+                    ->dropDownList($issetOs); ?>
             </div>
         </div>
     </div>

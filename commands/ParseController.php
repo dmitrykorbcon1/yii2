@@ -21,7 +21,8 @@ class ParseController extends Controller
     private $parser = null;
 
     /**
-     * ParseController constructor.
+     * Подключение библиотеки
+     * @return null|Parser
      * @throws \UAParser\Exception\FileNotFoundException
      */
     public function getParser()
@@ -35,7 +36,7 @@ class ParseController extends Controller
 
     /**
      * Парсер
-     * @param $path
+     * @param string $path
      * @return int
      * @throws \UAParser\Exception\FileNotFoundException
      * @throws \yii\db\Exception
@@ -44,11 +45,9 @@ class ParseController extends Controller
     {
         $i = 0;
         $arr = [];
-
         $file = @fopen($path, 'r');
-
         if ($file) {
-            while ($i <= 2000) {
+            while ($i <= 2000) {//ставлю искуственное ограничение на кол-во записей
                 $line = fgets($file);
                 if (!$line) {
                     continue;

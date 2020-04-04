@@ -49,7 +49,6 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 'parse' => 'parse/index',
-                'log' => 'log/index',
                 '/' => 'site/index',
             ],
         ],

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Log;
 use app\models\LogsSearch;
 use Yii;
 use yii\filters\AccessControl;
@@ -64,23 +65,27 @@ class SiteController extends Controller
     {
         $countRequest = [];
         $countBrowsers = [];
+        $issetOs = [];
         $searchModel = new LogsSearch();
         $searchModel->attributes = Yii::$app->request->get('LogsSearch');
         $dataProvider = $searchModel->search();
 
         foreach ($dataProvider->models as $key => $val){
             $countRequest[$val['date']] = $val['count'];
+            $countBrowsers[$val['date']] = round(($val['percent']/$val['count'])*100, 2);
         }
 
-        foreach ($dataProvider->models as $key => $val){
-            $countBrowsers[$val['date']] = round(($val['percent']/$val['count'])*100, 2) ;
+        foreach (Log::find()->select('os')->distinct('os')->asArray(true)->all() as $os) {
+            $issetOs[$os['os']] = $os['os'];
         }
+        $issetOs = array_merge([null => 'Все'], $issetOs);//список доступных ОС
 
         return $this->render('logs', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
             'countRequest' => $countRequest,
-            'countBrowsers' => $countBrowsers
+            'countBrowsers' => $countBrowsers,
+            'issetOs' => $issetOs
         ]);
     }
 
