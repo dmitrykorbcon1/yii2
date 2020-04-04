@@ -126,6 +126,17 @@ class LogsSearch extends Model
             return $dataProvider;
         }
 
+        if ($this->arch) {
+            $query->andWhere(
+                ['=', 'arch', $this->arch]
+            );
+        }
+        if ($this->os) {
+            $query->andWhere(
+                ['=', 'os', $this->os]
+            );
+        }
+
         if ($this->createdAt) {
             $query->andFilterWhere([
                 'and',
